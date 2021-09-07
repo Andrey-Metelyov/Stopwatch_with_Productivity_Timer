@@ -1,6 +1,6 @@
 package org.hyperskill.stopwatch
 
-import android.os.Looper.getMainLooper
+import android.os.Looper
 import android.widget.Button
 import android.widget.TextView
 import org.junit.Assert.assertEquals
@@ -8,7 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
+import org.robolectric.Shadows
 
 //Version 1.2
 @RunWith(RobolectricTestRunner::class)
@@ -31,7 +31,7 @@ class TimerStateUnitTest {
         activity.findViewById<Button>(R.id.startButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         val message = "in TextView property \"text\""
         assertEquals(message, "00:01", activity.findViewById<TextView>(R.id.textView).text)
@@ -44,7 +44,7 @@ class TimerStateUnitTest {
         activity.findViewById<Button>(R.id.startButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         activity.findViewById<Button>(R.id.resetButton).performClick()
 
@@ -59,12 +59,12 @@ class TimerStateUnitTest {
         activity.findViewById<Button>(R.id.startButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         activity.findViewById<Button>(R.id.startButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         val message = "in TextView property \"text\""
         assertEquals(message, "00:02", activity.findViewById<TextView>(R.id.textView).text)
@@ -77,17 +77,17 @@ class TimerStateUnitTest {
         activity.findViewById<Button>(R.id.startButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         activity.findViewById<Button>(R.id.resetButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         activity.findViewById<Button>(R.id.resetButton).performClick()
 
         Thread.sleep(1100)
-        shadowOf(getMainLooper()).runToEndOfTasks()
+        Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         val message = "in TextView property \"text\""
         assertEquals(message, "00:00", activity.findViewById<TextView>(R.id.textView).text)
