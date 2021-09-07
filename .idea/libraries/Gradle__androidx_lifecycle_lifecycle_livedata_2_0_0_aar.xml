@@ -2,8 +2,8 @@
   <library name="Gradle: androidx.lifecycle:lifecycle-livedata:2.0.0@aar">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/dbf4d0be7000f87036d87a5da6d0fdf7/transformed/lifecycle-livedata-2.0.0/res" />
-      <root url="jar://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/d607992670876f57dc8dff1e6b62975b/transformed/lifecycle-livedata-2.0.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/d607992670876f57dc8dff1e6b62975b/transformed/lifecycle-livedata-2.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/d607992670876f57dc8dff1e6b62975b/transformed/lifecycle-livedata-2.0.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/d607992670876f57dc8dff1e6b62975b/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />

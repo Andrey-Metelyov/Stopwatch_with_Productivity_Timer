@@ -2,8 +2,8 @@
   <library name="Gradle: androidx.activity:activity:1.0.0@aar">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/cfb0685ac642a28ece5e09208001e862/transformed/jetified-activity-1.0.0/res" />
-      <root url="jar://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/71647181b6ec85e7f7f848f6f5fc8a78/transformed/jetified-activity-1.0.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/71647181b6ec85e7f7f848f6f5fc8a78/transformed/jetified-activity-1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/71647181b6ec85e7f7f848f6f5fc8a78/transformed/jetified-activity-1.0.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../../app/Gradle/caches/transforms-3/71647181b6ec85e7f7f848f6f5fc8a78/transformed/jetified-activity-1.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
