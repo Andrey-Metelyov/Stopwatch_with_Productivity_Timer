@@ -1,10 +1,12 @@
 package org.hyperskill.stopwatch
 
-import android.app.AlertDialog
-import android.app.Dialog
+import android.app.*
+import android.app.PendingIntent.*
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,9 +16,12 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.DialogFragment
 import java.lang.IllegalStateException
 import java.util.*
+
+const val CHANNEL_ID = "org.hyperskill"
 
 class SettingsDialog(var upperLimit: Int) : DialogFragment() {
     private lateinit var listener: SettingsDialogListener
@@ -75,41 +80,61 @@ class MainActivity : AppCompatActivity()
     private lateinit var btnSettings: Button
     private lateinit var textView: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var notificationBuilder: NotificationCompat.Builder
 
     private val handler: Handler = Handler(Looper.getMainLooper())
     private var started: Boolean = false
-    private var time = 0
+    private var timeStarted = 0L
     private var timeLimit = 0
     private var defaultColor: Int = 0
+    private var reminded = false
 
     private val updateTimer: Runnable = object : Runnable {
         override fun run() {
-            time++
+//            ++timeStarted
             renderTimeAndProgressBar()
-            handler.postDelayed(this, 1000)
+            handler.postDelayed(this, 500)
         }
     }
 
     private fun renderTimeAndProgressBar() {
-        val minutes = time / 60
-        val seconds = time % 60
-        if (timeLimit != 0 && time >= timeLimit) {
-            textView.setTextColor(Color.RED)
-        } else {
-            textView.setTextColor(defaultColor)
-        }
-        textView.text = String.format("%02d:%02d", minutes, seconds)
         if (started) {
+            val elapsed = (System.currentTimeMillis() - timeStarted) / 1000
+            val minutes = elapsed / 60
+            val seconds = elapsed % 60
+            if (timeLimit != 0 && elapsed >= timeLimit) {
+                remind()
+                textView.setTextColor(Color.RED)
+            } else {
+                textView.setTextColor(defaultColor)
+            }
+            Log.d("MainActivity","elapsed=$elapsed, timeLimit=$timeLimit ${textView.currentTextColor}")
+            textView.text = String.format("%02d:%02d", minutes, seconds)
             val random = Random()
             val color =
                 Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
             progressBar.indeterminateTintList = ColorStateList.valueOf(color)
+        } else {
+            textView.text = String.format("%02d:%02d", 0, 0)
+            textView.setTextColor(defaultColor)
+        }
+    }
+
+    private fun remind() {
+        if (!reminded) {
+            val notificationManager = applicationContext
+                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.notify(393939, notificationBuilder.build())
+            reminded = true
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setupNotification()
+
         btnStart = findViewById(R.id.startButton)
         btnReset = findViewById(R.id.resetButton)
         btnSettings = findViewById(R.id.settingsButton)
@@ -131,16 +156,45 @@ class MainActivity : AppCompatActivity()
         btnStart.setOnClickListener {
             if (!started) {
                 progressBar.visibility = ProgressBar.VISIBLE
-                handler.postDelayed(updateTimer, 1000)
+                handler.postDelayed(updateTimer, 500)
+                btnSettings.isEnabled = false
+                timeStarted = System.currentTimeMillis()
                 started = true
             }
         }
         btnReset.setOnClickListener {
             handler.removeCallbacks(updateTimer)
             started = false
+            reminded = false
+            btnSettings.isEnabled = true
             progressBar.visibility = ProgressBar.INVISIBLE
-            time = 0
+//            timeStarted = 0
             renderTimeAndProgressBar()
         }
+    }
+
+    private fun setupNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Reminder"
+            val descriptionText = "Time is coming"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        val pendingIntent = getActivity(applicationContext, 0, intent, FLAG_UPDATE_CURRENT)
+
+        notificationBuilder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.photo)
+            .setContentTitle("Reminder")
+            .setContentText("Time is coming!")
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
     }
 }

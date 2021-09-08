@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Stopwatch with Productivity Timer/Stopwatch with Productivity Timer/task/src/main/res/drawable/ic_launcher_background.xml" value="0.4222222222222222" />
+        <entry key="..\:/Projects/Stopwatch with Productivity Timer/Stopwatch with Productivity Timer/task/src/main/res/drawable/photo.xml" value="0.4222222222222222" />
         <entry key="..\:/Projects/Stopwatch with Productivity Timer/Stopwatch with Productivity Timer/task/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Projects/Stopwatch with Productivity Timer/Stopwatch with Productivity Timer/task/src/main/res/layout/dialog_settings.xml" value="0.2388888888888889" />
+        <entry key="..\:/Projects/Stopwatch with Productivity Timer/Stopwatch with Productivity Timer/task/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.4222222222222222" />
         <entry key="..\:/Projects/Stopwatch_with_Productivity_Timer/Stopwatch with Productivity Timer/task/src/main/res/layout/activity_main.xml" value="0.313585291113381" />
         <entry key="..\:/Projects/Stopwatch_with_Productivity_Timer/Stopwatch with Productivity Timer/task/src/main/res/layout/dialog_settings.xml" value="0.313585291113381" />
       </map>

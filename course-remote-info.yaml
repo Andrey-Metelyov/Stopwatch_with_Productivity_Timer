@@ -17,10 +17,10 @@ stages:
   is_completed: true
 - id: 397
   step: 9289
-  is_completed: false
+  is_completed: true
 - id: 398
   step: 9290
-  is_completed: false
+  is_completed: true
 topics:
   0:
   - title: Write, compile, and run

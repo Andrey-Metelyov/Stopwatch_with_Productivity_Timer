@@ -717,8 +717,8 @@ files:
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/72/stages/397/implement#comment
-status: Failed
+status: Solved
 feedback:
-  message: view with id &quot;settingsButton&quot; should be disabled when timer runs
-  time: Wed, 08 Sep 2021 11:29:38 UTC
-record: -1
+  message: Congratulations!
+  time: Wed, 08 Sep 2021 11:55:37 UTC
+record: 3
