@@ -2,7 +2,7 @@ package org.hyperskill.stopwatch
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -19,40 +19,43 @@ import java.lang.IllegalStateException
 import java.util.*
 
 class SettingsDialog(var upperLimit: Int) : DialogFragment() {
-//    internal lateinit var listener: SettingsDialogListener
-    lateinit var upperLimitEditText: EditText
-//
-//    interface SettingsDialogListener {
-//        fun onDialogPositiveClick(dialog: DialogFragment)
+    private lateinit var listener: SettingsDialogListener
+    private lateinit var upperLimitEditText: EditText
+
+    interface SettingsDialogListener {
+        fun onDialogPositiveClick(dialog: DialogFragment)
 //        fun onDialogNegativeClick(dialog: DialogFragment)
-//    }
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        try {
-//            listener = context as SettingsDialogListener
-//        } catch (e: ClassCastException) {
-//            throw ClassCastException((context.toString() +
-//                    " must implement SettingsDialogListener"))
-//        }
-//    }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            listener = context as SettingsDialogListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException((context.toString() +
+                    " must implement SettingsDialogListener"))
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             val layout = inflater.inflate(R.layout.dialog_settings, null)
-            upperLimitEditText = layout.findViewById(R.id.upperLimit)
+            upperLimitEditText = layout.findViewById(R.id.upperLimitEditText)
             upperLimitEditText.setText(upperLimit.toString())
             builder
                 .setView(layout)
                 .setTitle("Settings")
-                .setPositiveButton(android.R.string.ok,
-                DialogInterface.OnClickListener { dialog, id ->
-                    Log.d("SettingsDialog", "upperLimit.text = ${upperLimitEditText.text.toString()}")
+                .setPositiveButton(android.R.string.ok
+                ) { _, _ ->
+                    Log.d(
+                        "SettingsDialog",
+                        "upperLimit.text = ${upperLimitEditText.text}"
+                    )
                     upperLimit = upperLimitEditText.text.toString().toInt()
-//                    dialog
-//                    timeLimit = find
-                })
+                    listener.onDialogPositiveClick(this)
+                }
                 .setNegativeButton(android.R.string.cancel) { _, _ -> }
             builder.create()
         } ?: throw IllegalStateException("Activity is null")
@@ -60,15 +63,12 @@ class SettingsDialog(var upperLimit: Int) : DialogFragment() {
 }
 
 class MainActivity : AppCompatActivity()
-//    , SettingsDialog.SettingsDialogListener
+    , SettingsDialog.SettingsDialogListener
 {
-//    override fun onDialogPositiveClick(dialog: DialogFragment) {
-//        timeLimit = (dialog as SettingsDialog).timeLimit
-//    }
-//
-//    override fun onDialogNegativeClick(dialog: DialogFragment) {
-//        TODO("Not yet implemented")
-//    }
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        timeLimit = (dialog as SettingsDialog).upperLimit
+        Log.d("MainActivity", "timeLimit=$timeLimit")
+    }
 
     private lateinit var btnStart: Button
     private lateinit var btnReset: Button
@@ -80,6 +80,8 @@ class MainActivity : AppCompatActivity()
     private var started: Boolean = false
     private var time = 0
     private var timeLimit = 0
+    private var defaultColor: Int = 0
+
     private val updateTimer: Runnable = object : Runnable {
         override fun run() {
             time++
@@ -91,6 +93,11 @@ class MainActivity : AppCompatActivity()
     private fun renderTimeAndProgressBar() {
         val minutes = time / 60
         val seconds = time % 60
+        if (timeLimit != 0 && time >= timeLimit) {
+            textView.setTextColor(Color.RED)
+        } else {
+            textView.setTextColor(defaultColor)
+        }
         textView.text = String.format("%02d:%02d", minutes, seconds)
         if (started) {
             val random = Random()
@@ -107,6 +114,7 @@ class MainActivity : AppCompatActivity()
         btnReset = findViewById(R.id.resetButton)
         btnSettings = findViewById(R.id.settingsButton)
         textView = findViewById(R.id.textView)
+        defaultColor = textView.currentTextColor
         progressBar = findViewById(R.id.progressBar)
 
         renderTimeAndProgressBar()
