@@ -713,6 +713,9 @@ files:
   visible: false
   text: sdk=28
   learner_created: false
+- name: src/main/res/layout/dialog_settings.xml
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/72/stages/397/implement#comment
 status: Unchecked
 record: -1
