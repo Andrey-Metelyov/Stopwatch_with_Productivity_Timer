@@ -29,7 +29,6 @@ class SettingsDialog(var upperLimit: Int) : DialogFragment() {
 
     interface SettingsDialogListener {
         fun onDialogPositiveClick(dialog: DialogFragment)
-//        fun onDialogNegativeClick(dialog: DialogFragment)
     }
 
     override fun onAttach(context: Context) {
@@ -91,7 +90,6 @@ class MainActivity : AppCompatActivity()
 
     private val updateTimer: Runnable = object : Runnable {
         override fun run() {
-//            ++timeStarted
             renderTimeAndProgressBar()
             handler.postDelayed(this, 500)
         }
@@ -148,7 +146,6 @@ class MainActivity : AppCompatActivity()
         btnSettings.setOnClickListener {
             if (!started) {
                 val settingsDialog = SettingsDialog(timeLimit)
-//                settingsDialog.onDial
                 settingsDialog.show(supportFragmentManager, null)
             }
         }
@@ -168,7 +165,6 @@ class MainActivity : AppCompatActivity()
             reminded = false
             btnSettings.isEnabled = true
             progressBar.visibility = ProgressBar.INVISIBLE
-//            timeStarted = 0
             renderTimeAndProgressBar()
         }
     }
